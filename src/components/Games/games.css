@@ -1,0 +1,114 @@
+#home-container {
+    min-height: calc(100vh - 50px);
+    padding-bottom: 60px;
+}
+
+.homeFilter-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.homeLinks-box {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.homeLink {
+    display: flex;
+    color: #fff;
+    text-transform: capitalize;
+    position: relative;
+    margin: 0;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.homeLink::after {
+    content: "";
+    display: block;
+    width: 100%;
+    border-bottom: 2px solid #ffc107;
+    position: absolute;
+    bottom: -5px;
+}
+
+.homeLink.noActive {
+    color: #ccc;
+}
+
+.homeLink.noActive::after {
+    border: none;
+}
+
+.filter-container {
+    margin-left: auto;
+}
+
+#filter-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 5px 10px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    gap: 10px;
+    color: #fff;
+    width: 100%;
+    background-color: #121212;
+}
+
+#filter-btn>span {
+    display: flex;
+    align-items: center;
+    font-size: 1.3em;
+}
+
+#cardGames-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#cardGames-box {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 40px 20px;
+    width: 100%;
+}
+
+#cardGames-container::-webkit-scrollbar {
+    display: none;
+    /* Height of scrollbar */
+}
+
+.alertComingSoon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    bottom: 0%;
+    left: 0%;
+    background: radial-gradient(transparent, rgb(18, 18, 18, .8));
+    z-index: 1000;
+}
+
+.alertComingSoon-container>div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 150px;
+    width: 270px;
+    border-radius: 5px;
+    background-color: rgb(18, 18, 18, .8);
+    backdrop-filter: blur(5px);
+}

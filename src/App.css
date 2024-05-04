@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Rubik+Iso&display=swap');
+
+:root {
+    --background-color: #171c21;
+}
+
+* {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Slab', serif;
+}
+
+body {
+    text-shadow: 0px 1px 1px #555;
+    background-color: var(--background-color);
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ------------ Responsive ------------- */
+@media screen and (min-width: 425px) {
+    .logo-box {
+        width: 100px;
+    }
+
+    #cart-icon {
+        font-size: 1.4em;
+    }
+
+    #wishlistHeader-icon {
+        font-size: 1.3em;
+    }
+
+    .cart-box {
+        max-width: 80%;
+        align-self: center;
+    }
+
+    .frontPageCard-price {
+        font-size: .9em;
+    }
+
+    .homeTitle-box {
+        margin-left: 0px;
+    }
+
+    #card-item_game {
+        width: 220px;
+    }
+
+    .gameDetails-box,
+    #otherGames-container,
+    #cardGames-container,
+    #tags-games-box {
+        width: 80%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .logo-box {
+        width: 120px;
+    }
+
+    #search-icon {
+        display: none;
+    }
+
+    .frontPage-container {
+        height: 320px;
+    }
+
+    .searchBar-container {
+        display: flex;
+        flex: .8;
+        height: 30px;
+        width: 100px;
+    }
+
+    .search-bar {
+        font-size: 1.1em;
+    }
+
+    .cartGamesPrev-box {
+        width: 250px;
+    }
+
+    .card-title-main {
+        font-size: 1.5em;
+    }
+
+    .frontPageCard-price {
+        font-size: 1em;
+    }
+
+    #card-item_game {
+        width: 240px;
+    }
+
+    .cart-box {
+        align-self: none;
+    }
+
+    .cartGamesResume-box {
+        flex-direction: row;
+    }
+
+    .resumeGamesBox {
+        min-width: 320px;
+        align-self: flex-start;
+    }
+
+    .resumeGameTitle-box {
+        width: 100px;
+    }
+
+    .gameDetails-box {
+        margin-top: 200px;
+    }
+
+    .gameplay-box {
+        height: 350px;
+    }
+
+    .gameOptions-container {
+        flex-wrap: nowrap;
+    }
+
+    .gameFrontPage {
+        display: flex;
+    }
+
+    .gameBackgroundContainer {
+        height: 300px;
+    }
+
+    .gameDetails-box {
+        gap: 20px;
+    }
+
+    .gameDetails-box,
+    #otherGames-container,
+    #cardGames-container,
+    #tags-games-box {
+        width: 80%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    header {
+        height: 60px;
+    }
+
+    .logo-box {
+        width: 150px;
+    }
+
+    #cart-icon {
+        font-size: 1.6em;
+    }
+
+    .cartGamesPrev-box {
+        width: 300px;
+    }
+
+    .frontPage-container {
+        height: 400px;
+    }
+
+    #card-item_game {
+        width: 260px;
+    }
+
+    .cartGamesResume-box {
+        width: 80%;
+    }
+
+    .cart-box {
+        max-height: 100px;
+    }
+
+    .gameTitle {
+        font-size: 1.2em;
+        text-shadow: 2px 2px 2px #000;
+    }
+
+    .gamePrice {
+        font-size: .9em;
+    }
+
+    .gameAmount {
+        font-size: .8em;
+    }
+
+    .cartBtns {
+        height: 23px;
+        width: 23px;
+        font-size: .9em;
+    }
+
+    .gameBackgroundContainer {
+        height: 350px;
+    }
+
+    .gameplay-box {
+        height: 350px;
+    }
+
+    .gameDetails-box,
+    #otherGames-container,
+    #cardGames-container,
+    #tags-games-box {
+        width: 60%;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    header {
+        height: 70px;
+    }
+
+    .logo-box {
+        width: 170px;
+    }
+
+    .searchBar-container {
+        height: 40px;
+    }
+
+    .gameSearched-link>img {
+        max-width: 10%;
+        object-fit: contain;
+        border-radius: 5px;
+    }
+
+    .cartGamesPrev-box {
+        width: 360px;
+        max-height: 400px;
+        gap: 15px;
+    }
+
+    .cart-box {
+        max-width: 65%;
+    }
+
+    .separator {
+        margin-top: 20px;
+    }
+
+    .frontPage-container {
+        height: 460px;
+    }
+
+    .searchBar-container {
+        width: 30%;
+    }
+
+    #card-item_game {
+        width: 280px;
+    }
+
+    .gameplay-box {
+        width: 85%;
+    }
+
+    .gameDetails-box {
+        gap: 40px;
+    }
+
+    .gameDetails-box,
+    #otherGames-container,
+    #cardGames-container,
+    #tags-games-box {
+        width: 55%;
+    }
+}
+
+@media screen and (min-width: 2560px) {
+    .frontPage-container {
+        height: 600px;
+    }
+
+    .gameplay-box {
+        height: 700px;
+        width: 80%;
+    }
+
+    .gameDetails-box {
+        gap: 40px;
+    }
+}
