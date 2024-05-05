@@ -68,6 +68,14 @@ export default function Cart({ handleRemoveFromCart, inputRef, focusInput }) {
         return firstIndex === index;
     });
 
+    const filterDelGame = (id) => {
+        const newGamesInCart = filterGames.filter(game => game.id !== id)
+        setGamesInCart(newGamesInCart);
+        handleRemoveFromCart();
+        localStorage.removeItem(id);
+        localStorage.setItem(id, JSON.stringify({ [id]: false }));
+        dispatch(removeFromCart(id));
+    }
 
     const gamesAddsInCart = filterGames.map((game) => (
         <div key={game.id} className="cart-box bg-secondary shadow rounded d-flex gap-2">
@@ -83,7 +91,7 @@ export default function Cart({ handleRemoveFromCart, inputRef, focusInput }) {
                         add
                     </span>
                     {/* Access the object passed by id, in case there is nothing inside
-                        that object, gameCount will be equal to 0 */}                                               
+                        that object, gameCount will be equal to 0 */}
                     <span className="cartBtns" id={game.id}>{gameCounts[game.id] || 1}</span>
                     <span onClick={() => decreaseCount(game.id)} className="cartBtns material-symbols-outlined btn btn-dark p-1">
                         remove
@@ -189,6 +197,11 @@ export default function Cart({ handleRemoveFromCart, inputRef, focusInput }) {
             }
         }
     }
+
+    const clearAfterBuyGame = () => {
+        // Clear page when you buy game/s
+        window.location.replace(HOME_URL);
+    };
 
     return (
         <div className="cart-container text-white pb-4">
@@ -301,7 +314,7 @@ export default function Cart({ handleRemoveFromCart, inputRef, focusInput }) {
                                                     ))
                                                 }
                                             </div>
-                                            <Link to={HOME_URL} className="d-flex justify-content-center mt-3">
+                                            <Link onClick={() => clearAfterBuyGame() } to={HOME_URL} className="d-flex justify-content-center mt-3">
                                                 <button className="btn btn-primary">
                                                     Go to home page
                                                 </button>

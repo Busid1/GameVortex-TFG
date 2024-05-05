@@ -1,13 +1,12 @@
 import "./game.css";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSpring, animated } from 'react-spring';
 import { useDispatch } from "react-redux";
 import { addToCart, removeFromCart, addToFav, removeFromFav } from "../../redux/actions";
 import { useLocation } from "react-router-dom";
 import { HOME_URL } from "../../App";
 
-export default function Game({ id, title, price, description, image, prevGameplay, handleIsTrue, handleAddToCart, handleRemoveFromCart }) {
+export default function Game({ id, title, price, description, image, prevGameplay, handleAddToCart, handleRemoveFromCart }) {
     const location = useLocation();
     const popoverList = useRef();
     const dispatch = useDispatch();
@@ -16,58 +15,6 @@ export default function Game({ id, title, price, description, image, prevGamepla
     const changeFocus = useRef(null);
     const [cartAlert, setCartAlert] = useState(false);
     const [delAlert, setDelAlert] = useState(false);
-
-    const handleTrueCart = (gameId) => {
-        const localId = localStorage.getItem(gameId);
-
-        setTimeout(() => {
-            if (localId) {
-                localStorage.removeItem(gameId);
-                localStorage.setItem(id, JSON.stringify({ [gameId]: true }))
-                handleRemoveFromCart();
-                dispatch(removeFromCart(id));
-            }
-            else {
-                localStorage.setItem(id, JSON.stringify({ [gameId]: true }))
-            }
-
-            if (delBtnRef && delBtnRef.current) {
-                delBtnRef.current.blur();
-                setDelAlert(true);
-                changeFocus.current.focus();
-
-                setTimeout(() => {
-                    setDelAlert(false);
-                }, 1000);
-            }
-        }, 500)
-    };
-
-    const handleFalseCart = (gameId) => {
-        const localId = localStorage.getItem(gameId);
-
-        setTimeout(() => {
-            if (localId) {
-                localStorage.removeItem(gameId);
-                localStorage.setItem(id, JSON.stringify({ [gameId]: false }))
-                handleAddToCart();
-                dispatch(addToCart({ id, title, price, description, image }));
-            }
-            else {
-                localStorage.setItem(id, JSON.stringify({ [gameId]: true }))
-            }
-
-            if (cartBtnRef && cartBtnRef.current) {
-                cartBtnRef.current.blur();
-                setCartAlert(true);
-                changeFocus.current.focus();
-
-                setTimeout(() => {
-                    setCartAlert(false);
-                }, 1000);
-            }
-        }, 500)
-    };
 
     useEffect(() => {
         // Verificar si title tiene un valor definido
@@ -95,77 +42,60 @@ export default function Game({ id, title, price, description, image, prevGamepla
         }
     };
 
-    const [cartAnimation, setCartAnimation] = useState(false);
-    const [cartCoordinates, setCartCoordinates] = useState({ top: 0, left: 0 });
-    const [currentCartCoordinates, setCurrentCartCoordinates] = useState({ top: 0, left: 0 });
-
-    const handleAnimAddToCart = () => {
-        const cartIcon = document.getElementById('cart-icon');
-        const cartIconCoordinates = cartIcon.getBoundingClientRect();
-        setCartCoordinates({
-            top: cartIconCoordinates.top,
-            left: cartIconCoordinates.left,
-        });
-        setCartAnimation(true);
-
-        setTimeout(() => {
-            setCartAnimation(false);
-        }, 800);
-    };
-
-    const handleMouseMove = (event) => {
-        setCurrentCartCoordinates({
-            top: event.clientY,
-            left: event.clientX,
-        });
-    };
-
-    // Spring animation configuration for cart animation
-    const animationProps = useSpring({
-        top: cartAnimation ? cartCoordinates.top : currentCartCoordinates.top,
-        left: cartAnimation ? `${cartCoordinates.left - 30}px` : `${currentCartCoordinates.left}px`, // Utilizamos template literals para asegurar que el valor sea un string
-        opacity: cartAnimation ? 1 : 0,
-        scale: cartAnimation ? 0.6 : 1,
-    });
-
     // State and effect for favorite game
-    const [isFav, setIsFav] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(false);
     useEffect(() => {
         const getIsTrue = localStorage.getItem(title);
         const parseIsTrue = JSON.parse(getIsTrue);
         if (parseIsTrue && parseIsTrue[title]) {
-            setIsFav(true);
+            setIsFavorite(true);
         } else {
-            setIsFav(false);
+            setIsFavorite(false);
         }
     }, [title]);
 
+    // State and effect for game in cart
+    const [isInCart, setIsInCart] = useState(false);
+    useEffect(() => {
+        const getIsTrue = localStorage.getItem(id);
+        const parseIsTrue = JSON.parse(getIsTrue);
+        if (parseIsTrue && parseIsTrue[id]) {
+            setIsInCart(true);
+        } else {
+            setIsInCart(false);
+        }
+    }, [id]);
+
     // Function to add game to wishlist (favorites)
-    const handleAddFav = () => {
+    const handleAddToFav = () => {
         localStorage.setItem(title, JSON.stringify({ [title]: true }));
-        setIsFav(true);
+        setIsFavorite(true);
         dispatch(addToFav({ id, title, price, description, image, prevGameplay, handleAddToCart, handleRemoveFromCart }));
     };
 
-    const handleRemoveFav = () => {
+    // Function to remove game from wishlist (favorites)
+    const handleRemoveFromFav = () => {
+        handleRemoveFromCart();
         localStorage.removeItem(title);
-        setIsFav(false);
+        setIsFavorite(false);
         dispatch(removeFromFav(id));
     };
 
-    useEffect(() => {
-        // Initialize local storage when the component mounts if it's on the home page
-        if (location.pathname === HOME_URL) {
-            localStorage.setItem(id, JSON.stringify({ [id]: true }));
-            // Update state related to localStorage to force rendering
-            setLocalStorageUpdated(true);
-        }
-    
-        // Scroll to top when component mounts
-        window.scrollTo(0, 0);
-    }, [location.pathname]);
-    
-    const [localStorageUpdated, setLocalStorageUpdated] = useState(false);    
+    // Function to add game to cart
+    const handleTrueCart = () => {
+        handleAddToCart();
+        localStorage.setItem(id, JSON.stringify({ [id]: true }));
+        setIsInCart(true);
+        dispatch(addToCart({ id, title, price, description, image }));
+    };
+
+    // Function to remove game from cart
+    const handleFalseCart = () => {
+        handleRemoveFromCart();
+        localStorage.removeItem(id);
+        setIsInCart(false);
+        dispatch(removeFromCart(id));
+    };
 
     return (
         <div id="card-item_game" className="card rounded-3 my-3 bg-black d-flex align-items-center border-0">
@@ -175,12 +105,12 @@ export default function Game({ id, title, price, description, image, prevGamepla
                     <video ref={videoRef} autoPlay={false} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} playsInline loop muted preload="none" className="prevGameplay" src={prevGameplay}></video>
                 </Link>
                 {
-                    isFav ?
-                        <button onClick={() => handleRemoveFav(title)} id="favoriteFill-btn">
+                    isFavorite ?
+                        <button onClick={() => handleRemoveFromFav(title)} id="favoriteFill-btn">
                             <i className="fas fa-heart"></i>
                         </button>
                         :
-                        <button onClick={() => handleAddFav(title)} id="favorite-btn">
+                        <button onClick={() => handleAddToFav(title)} id="favorite-btn">
                             <span className="material-symbols-outlined">
                                 favorite
                             </span>
@@ -216,36 +146,24 @@ export default function Game({ id, title, price, description, image, prevGamepla
                     <i className="fas fa-info-circle"></i>
                 </button>
                 {
-                    handleIsTrue(id) ? (
-                        <button
-                            onMouseMove={handleMouseMove}
-                            id="cart-btn"
-                            ref={cartBtnRef}
-                            onClick={() => { handleFalseCart(id); handleAnimAddToCart() }}
-                            className="btn btn-warning d-flex align-items-center gap-2">
-                            <span className="material-symbols-outlined">
-                                add_shopping_cart
-                            </span>
-                            {cartAnimation && (
-                                <animated.img
-                                    src={image}
-                                    style={{
-                                        ...animationProps,
-                                        position: 'fixed',
-                                        width: '80px',
-                                        height: '50px',
-                                        borderRadius: '10px'
-                                    }}
-                                ></animated.img>
-                            )}
-                        </button>
-                    ) 
-                    : 
-                    (
-                        <button id="delete-btn" ref={delBtnRef} onClick={() => handleTrueCart(id)} className="btn btn-danger d-flex align-items-center gap-2">
-                            <i className="fas fa-trash-alt"></i>
-                        </button>
-                    )
+                    isInCart ?
+                        (
+                            <button id="delete-btn" ref={delBtnRef} onClick={() => handleFalseCart(id)} className="btn btn-danger d-flex align-items-center gap-2">
+                                <i className="fas fa-trash-alt"></i>
+                            </button>
+                        )
+                        :
+                        (
+                            <button
+                                id="cart-btn"
+                                ref={cartBtnRef}
+                                onClick={() => handleTrueCart(id)}
+                                className="btn btn-warning d-flex align-items-center gap-2">
+                                <span className="material-symbols-outlined">
+                                    add_shopping_cart
+                                </span>
+                            </button>
+                        )
                 }
             </div>
         </div>

@@ -123,7 +123,7 @@ export default function Payment({ handleClosePayment, handleAddPayment, inputRef
                                                     autoComplete="off"
                                                     onChange={handleChange}
                                                     maxLength={15}
-                                                    value={userData.cardHolder} type="text" placeholder='Jhon Travolta' />
+                                                    value={userData.cardHolder} type="text" placeholder='Name and surname' />
                                                 {showErrors.cardHolder && errors.cardHolder ? (
                                                     <p className='text-danger'>{errors.cardHolder}</p>
                                                 ) : null}

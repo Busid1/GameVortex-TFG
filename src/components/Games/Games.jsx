@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { HOME_URL } from "../../App";
 import { useState } from "react"
 
-export default function Games({ handleIsTrue, videogames, handleAddToCart, handleRemoveFromCart }) {
+export default function Games({ videogames, handleAddToCart, handleRemoveFromCart }) {
     const [alertComingSoon, setAlertComingSoon] = useState(false);
     const handleAlertComingSoon = () => {
         setAlertComingSoon(!alertComingSoon);
@@ -19,7 +19,6 @@ export default function Games({ handleIsTrue, videogames, handleAddToCart, handl
                     if (game.id === 1) {
                         return (
                             <FrontPage
-                                handleIsTrue={handleIsTrue}
                                 handleAddToCart={handleAddToCart}
                                 handleRemoveFromCart={handleRemoveFromCart}
                                 key={game.id}
@@ -60,7 +59,6 @@ export default function Games({ handleIsTrue, videogames, handleAddToCart, handl
                             if (game.id !== 1) {
                                 return (
                                     <Game
-                                        handleIsTrue={handleIsTrue}
                                         handleAddToCart={handleAddToCart}
                                         handleRemoveFromCart={handleRemoveFromCart}
                                         key={game.id}

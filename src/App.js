@@ -70,27 +70,46 @@ function App() {
       })
   }
 
-  const handleIsTrue = (gameId) => {
-    const getIsTrue = localStorage.getItem(gameId);
-    const parseIstrue = JSON.parse(getIsTrue);
-    return parseIstrue && parseIstrue[gameId];
-  }
+  const clearLocalStorageOnReload = () => {
+    window.addEventListener('beforeunload', () => {
+      // Clear localStorage on page reload
+      localStorage.clear();
+    });
+  };
+
+  useEffect(() => {
+    // Initialize local storage when the component mounts if it's on the home page
+    clearLocalStorageOnReload();
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <div>
       {
-        location.pathname !== `${HOME_URL}/cart` ?
-          <Header cartCount={cartCount} onSearch={onSearch} videogames={videogames} handleRemoveFromCart={handleRemoveFromCart} searchGame={searchGame} />
+        videogames.length === 23 ?
+          <div>
+            {
+              location.pathname !== `${HOME_URL}/cart` ?
+                <Header cartCount={cartCount} onSearch={onSearch} videogames={videogames} handleRemoveFromCart={handleRemoveFromCart} searchGame={searchGame} />
+                :
+                (null)
+            }
+            <Routes>
+              <Route path={HOME_URL} element={<Games videogames={videogames} handleAddToCart={handleAddToCart} handleRemoveFromCart={handleRemoveFromCart} />}></Route>
+              <Route path={`${HOME_URL}/:game`} element={<GameDetails handleAddToCart={handleAddToCart} handleRemoveFromCart={handleRemoveFromCart} videogames={videogames} />} />
+              <Route path={`${HOME_URL}/wishlist`} element={<Wishlist handleAddToCart={handleAddToCart} handleRemoveFromCart={handleRemoveFromCart} />} />
+              <Route path={`${HOME_URL}/cart`} element={<Cart handleRemoveFromCart={handleRemoveFromCart} inputRef={inputRef} focusInput={focusInput} />} />
+            </Routes>
+            <Footer />
+          </div>
           :
-          (null)
+          <div className="spinner-container">
+            <div className="spinner-border text-light" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
       }
-      <Routes>
-        <Route path={HOME_URL} element={<Games handleIsTrue={handleIsTrue} videogames={videogames} handleAddToCart={handleAddToCart} handleRemoveFromCart={handleRemoveFromCart} />}></Route>
-        <Route path={`${HOME_URL}/:game`} element={<GameDetails handleIsTrue={handleIsTrue} handleAddToCart={handleAddToCart} handleRemoveFromCart={handleRemoveFromCart} videogames={videogames} />} />
-        <Route path={`${HOME_URL}/wishlist`} element={<Wishlist handleIsTrue={handleIsTrue} />} />
-        <Route path={`${HOME_URL}/cart`} element={<Cart handleRemoveFromCart={handleRemoveFromCart} inputRef={inputRef} focusInput={focusInput} />} />
-      </Routes>
-      <Footer />
     </div>
   )
 }

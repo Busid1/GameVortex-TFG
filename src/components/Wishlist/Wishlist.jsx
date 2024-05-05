@@ -4,7 +4,7 @@ import "./wishlist.css"
 import { Link } from "react-router-dom";
 import { HOME_URL } from "../../App";
 
-export default function Wishlist({ handleIsTrue }) {
+export default function Wishlist({ handleAddToCart, handleRemoveFromCart }) {
     const reduxfavorites = useSelector(state => state.favGames);
     const favorites = reduxfavorites.filter((elem, index, arr) => {
         // Use `findIndex` to find the index of the first element with the same ID
@@ -26,9 +26,8 @@ export default function Wishlist({ handleIsTrue }) {
                     favorites.map(game => {
                         return (
                             <Game
-                                handleIsTrue={handleIsTrue}
-                                handleAddToCart={game.handleAddToCart}
-                                handleRemoveFromCart={game.handleRemoveFromCart}
+                                handleAddToCart={handleAddToCart}
+                                handleRemoveFromCart={handleRemoveFromCart}
                                 key={game.id}
                                 id={game.id}
                                 title={game.title}
