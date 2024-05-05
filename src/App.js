@@ -7,8 +7,8 @@ import axios from "axios";
 import GameDetails from './components/GameDetails/GameDetails';
 import Cart from './components/Cart/Cart';
 import Wishlist from './components/Wishlist/Wishlist';
-export const HOME_URL = "/gamevortex";
-export const API_URL = `https://gamevortex.glitch.me${HOME_URL}`;
+export const HOME_URL = "/GameVortex-TFG";
+export const API_URL = `https://gamevortex.glitch.me/gamevortex`;
 import './App.css';
 
 function App() {
