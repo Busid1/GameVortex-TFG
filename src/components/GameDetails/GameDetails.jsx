@@ -132,7 +132,7 @@ export default function GameDetails({ videogames, handleAddToCart, handleRemoveF
 
     // Function to add game to cart
     const handleTrueCart = () => {
-        handleFalseCart();
+        handleAddToCart();
         localStorage.setItem(id, JSON.stringify({ [id]: true }));
         setIsInCart(true);
         dispatch(addToCart({ id, title, price, description, image }));
@@ -267,20 +267,20 @@ export default function GameDetails({ videogames, handleAddToCart, handleRemoveF
                         {
                             isInCart ?
                                 (
-                                    <button id="detailDelete-btn" ref={delBtnRef} onClick={() => handleTrueCart(id)} className="btn btn-danger d-flex align-items-center gap-2">
+                                    <button id="detailDelete-btn" ref={delBtnRef} onClick={() => handleFalseCart(id)} className="btn btn-danger d-flex align-items-center gap-2">
                                         <i className="fas fa-trash-alt"></i>
                                     </button>
                                 )
                                 :
                                 (
-                                    <button id="detailCart-btn" ref={cartBtnRef} onClick={() => handleFalseCart(id)} className="btn btn-warning d-flex align-items-center gap-2">
+                                    <button id="detailCart-btn" ref={cartBtnRef} onClick={() => handleTrueCart(id)} className="btn btn-warning d-flex align-items-center gap-2">
                                         <span className="material-symbols-outlined">
                                             add_shopping_cart
                                         </span>
                                     </button>
                                 )
                         }
-                    </div>
+                    </div> 
                     :
                     null
             }
