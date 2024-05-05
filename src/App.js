@@ -41,6 +41,7 @@ function App() {
     }
     // When the component is mounted the function 'allGames()' will be executed
     gamesData();
+
   }, []);
 
   const [cartCount, setCartCount] = useState(0);

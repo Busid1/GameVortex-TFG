@@ -17,10 +17,18 @@ export default function FrontPage({ id, title, price, description, image, frontP
     const [delAlert, setDelAlert] = useState(false);
 
     useEffect(() => {
-        if (location.pathname !== `/${HOME_URL}`) {
+        // Initialize local storage when the component mounts if it's on the home page
+        if (location.pathname === HOME_URL) {
             localStorage.setItem(id, JSON.stringify({ [id]: true }));
+            // Update state related to localStorage to force rendering
+            setLocalStorageUpdated(true);
         }
-    }, []);
+    
+        // Scroll to top when component mounts
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
+    
+    const [localStorageUpdated, setLocalStorageUpdated] = useState(false);   
 
     const handleTrueCart = (gameId) => {
         const localId = localStorage.getItem(gameId);

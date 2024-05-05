@@ -157,11 +157,15 @@ export default function Game({ id, title, price, description, image, prevGamepla
         // Initialize local storage when the component mounts if it's on the home page
         if (location.pathname === HOME_URL) {
             localStorage.setItem(id, JSON.stringify({ [id]: true }));
+            // Update state related to localStorage to force rendering
+            setLocalStorageUpdated(true);
         }
-
+    
         // Scroll to top when component mounts
         window.scrollTo(0, 0);
-    }, []);
+    }, [location.pathname]);
+    
+    const [localStorageUpdated, setLocalStorageUpdated] = useState(false);    
 
     return (
         <div id="card-item_game" className="card rounded-3 my-3 bg-black d-flex align-items-center border-0">
